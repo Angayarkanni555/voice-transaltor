@@ -1,0 +1,8 @@
+flask
+sounddevice
+scipy
+SpeechRecognition
+deep-translator
+gtts
+pyttsx3
+playsound==1.2.2

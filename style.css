@@ -1,0 +1,67 @@
+body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: Segoe UI;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 20px;
+    width: 420px;
+    color: white;
+    text-align: center;
+}
+
+select,
+input,
+textarea,
+button {
+    width: 100%;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+button {
+    background: #00ffd5;
+    font-weight: bold;
+    cursor: pointer;
+
+    /* Button base */
+    button {
+        background: #00ffd5;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.1s ease;
+    }
+
+    /* When clicked / active */
+    button.active {
+        background: #ff9800;
+        /* Orange */
+        color: white;
+    }
+
+    /* While processing */
+    button.processing {
+        background: #2196f3;
+        /* Blue */
+        color: white;
+    }
+
+    /* Small click effect */
+    button:active {
+        transform: scale(0.97);
+    }
+
+}
+
+textarea {
+    height: 70px;
+}

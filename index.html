@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Speech Translator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/fontawesome.min.css" /> -->
+
+
+<body>
+
+    <div class="card">
+        <h1>🌍 Speech-to-Speech Translator</h1>
+
+        <select id="source">
+            {% for lang in languages %}
+            <option>{{ lang }}</option>
+            {% endfor %}
+        </select>
+
+        <select id="target">
+            {% for lang in languages %}
+            <option>{{ lang }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="number" id="duration" value="5" placeholder="Mic seconds">
+
+        <select id="voice">
+            <option>Female</option>
+            <option>Male</option>
+        </select>
+        <button id="speakBtn" onclick="start()">🎙 Speak & Translate</button>
+
+        <i class="fa-solid fa-air-conditioner"></i>
+
+        <textarea id="input" placeholder="Recognized text"></textarea>
+        <textarea id="output" placeholder="Translated text"></textarea>
+    </div>
+
+    <script>
+        function start() {
+            const btn = document.getElementById("speakBtn");
+
+            // Change to listening state
+            btn.classList.add("active");
+            btn.innerText = "🎧 Listening...";
+            btn.disabled = true;
+
+            fetch("/translate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    source: source.value,
+                    target: target.value,
+                    duration: duration.value,
+                    voice: voice.value
+                })
+            })
+                .then(res => {
+                    // Change to processing state
+                    btn.classList.remove("active");
+                    btn.classList.add("processing");
+                    btn.innerText = "🌍 Translating...";
+                    return res.json();
+                })
+                .then(data => {
+                    input.value = data.input;
+                    output.value = data.output;
+
+                    // Done state
+                    btn.classList.remove("processing");
+                    btn.innerText = "🎙 Speak & Translate";
+                    btn.disabled = false;
+                })
+                .catch(() => {
+                    btn.classList.remove("active", "processing");
+                    btn.innerText = "🎙 Speak & Translate";
+                    btn.disabled = false;
+                    alert("Something went wrong!");
+                });
+        }
+    </script>
+
+</body>
+
+</html>
